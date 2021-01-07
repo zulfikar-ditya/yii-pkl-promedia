@@ -11,7 +11,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="item-category-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1><?= Html::encode($this->title) ?> Zulfikar</h1>
 
     <p>
         <?= Html::a('Create Item Category', ['create'], ['class' => 'btn btn-success']) ?>
