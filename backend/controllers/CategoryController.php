@@ -8,6 +8,7 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use backend\models\Statistic;
 
 /**
  * CategoryController implements the CRUD actions for ItemCategory model.
@@ -38,7 +39,6 @@ class CategoryController extends Controller
         $dataProvider = new ActiveDataProvider([
             'query' => ItemCategory::find(),
         ]);
-
         return $this->render('index', [
             'dataProvider' => $dataProvider,
         ]);

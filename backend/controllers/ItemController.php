@@ -6,6 +6,7 @@ use Yii;
 use backend\models\Item;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
+use backend\models\Statistic;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
@@ -39,6 +40,14 @@ class ItemController extends Controller
             'query' => Item::find(),
         ]);
 
+        $newStats = new Statistic();
+        $newStats->datetime = date('Y-m-d');
+        $newStats->user_ip = Yii::$app->request->userIP;
+        $newStats->user_host = Yii::$app->request->userHost;
+        $newStats->path_info = Yii::$app->request->pathInfo;
+        $newStats->query_string = Yii::$app->request->queryString;
+        $newStats->save();
+
         return $this->render('index', [
             'dataProvider' => $dataProvider,
         ]);
@@ -52,6 +61,14 @@ class ItemController extends Controller
      */
     public function actionView($id)
     {
+        $newStats = new Statistic();
+        $newStats->datetime = date('Y-m-d');
+        $newStats->user_ip = Yii::$app->request->userIP;
+        $newStats->user_host = Yii::$app->request->userHost;
+        $newStats->path_info = Yii::$app->request->pathInfo;
+        $newStats->query_string = Yii::$app->request->queryString;
+        $newStats->save();
+        
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
