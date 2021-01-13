@@ -4,6 +4,7 @@ namespace frontend\controllers;
 
 use Yii;
 use frontend\models\Item;
+use frontend\models\ItemCategory;
 use frontend\models\Statistic;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
@@ -21,6 +22,8 @@ class ItemController extends Controller
     public function behaviors()
     {
         return [
+            \yii\behaviors\TimestampBehavior::className(),
+            \yii\behaviors\BlameableBehavior::className(),
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -39,15 +42,9 @@ class ItemController extends Controller
         $dataProvider = new ActiveDataProvider([
             'query' => Item::find(),
         ]);
-
-        $newStats = new Statistic();
-        $newStats->datetime = date('Y-m-d');
-        $newStats->user_ip = Yii::$app->request->userIP;
-        $newStats->user_host = Yii::$app->request->userHost;
-        $newStats->path_info = Yii::$app->request->pathInfo;
-        $newStats->query_string = Yii::$app->request->queryString;
-        $newStats->save();
-
+        Yii::$app->AutoAddStatistic->trigger(
+            \common\component\AutoAddStatistic::EventSeeIndexAndViewPage
+        );
         return $this->render('index', [
             'dataProvider' => $dataProvider,
         ]);
@@ -61,13 +58,9 @@ class ItemController extends Controller
      */
     public function actionView($id)
     {
-        $newStats = new Statistic();
-        $newStats->datetime = date('Y-m-d');
-        $newStats->user_ip = Yii::$app->request->userIP;
-        $newStats->user_host = Yii::$app->request->userHost;
-        $newStats->path_info = Yii::$app->request->pathInfo;
-        $newStats->query_string = Yii::$app->request->queryString;
-        $newStats->save();
+        Yii::$app->AutoAddStatistic->trigger(
+            \common\component\AutoAddStatistic::EventSeeIndexAndViewPage
+        );
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);

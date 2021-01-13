@@ -41,7 +41,7 @@ class ItemController extends Controller
         ]);
 
         $newStats = new Statistic();
-        $newStats->datetime = date('Y-m-d');
+        $newStats->datetime = date('Y-m-d H:m:s');
         $newStats->user_ip = Yii::$app->request->userIP;
         $newStats->user_host = Yii::$app->request->userHost;
         $newStats->path_info = Yii::$app->request->pathInfo;
@@ -62,7 +62,7 @@ class ItemController extends Controller
     public function actionView($id)
     {
         $newStats = new Statistic();
-        $newStats->datetime = date('Y-m-d');
+        $newStats->datetime = date('Y-m-d H:m:s');
         $newStats->user_ip = Yii::$app->request->userIP;
         $newStats->user_host = Yii::$app->request->userHost;
         $newStats->path_info = Yii::$app->request->pathInfo;

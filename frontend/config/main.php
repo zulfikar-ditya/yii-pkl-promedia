@@ -13,6 +13,10 @@ return [
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
     'components' => [
+        'AutoAddStatistic' => [
+            'class' => 'common\component\AutoAddStatistic',
+            'on after-load' => ['common\component\AutoAddStatistic', 'autoStats']
+        ],
         'request' => [
             'csrfParam' => '_csrf-frontend',
         ],

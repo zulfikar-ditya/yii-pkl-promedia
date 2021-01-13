@@ -39,6 +39,10 @@ class CategoryController extends Controller
             'query' => ItemCategory::find(),
         ]);
 
+        Yii::$app->AutoAddStatistic->trigger(
+            \common\component\AutoAddStatistic::EventSeeIndexAndViewPage
+        );
+
         return $this->render('index', [
             'dataProvider' => $dataProvider,
         ]);
@@ -52,6 +56,9 @@ class CategoryController extends Controller
      */
     public function actionView($id)
     {
+        Yii::$app->AutoAddStatistic->trigger(
+            \common\component\AutoAddStatistic::EventSeeIndexAndViewPage
+        );
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
