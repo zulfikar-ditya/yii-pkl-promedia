@@ -15,6 +15,7 @@ use Yii;
  * @property int|null $updated_at
  * @property int|null $created_by
  * @property int|null $updated_by
+ * @property string|null $image
  *
  * @property ItemCategory $category
  * @property OrderItem[] $orderItems
@@ -38,6 +39,7 @@ class Item extends \yii\db\ActiveRecord
             [['name', 'price', 'category_id'], 'required'],
             [['price', 'category_id', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['name'], 'string', 'max' => 11],
+            [['image'], 'file', 'extensions' => 'jpg, jpeg, png'],
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => ItemCategory::className(), 'targetAttribute' => ['category_id' => 'id']],
         ];
     }
@@ -56,6 +58,7 @@ class Item extends \yii\db\ActiveRecord
             'updated_at' => 'Updated At',
             'created_by' => 'Created By',
             'updated_by' => 'Updated By',
+            'image' => 'Image',
         ];
     }
 

@@ -3,12 +3,14 @@
 namespace backend\controllers;
 
 use Yii;
-use backend\models\Item;
+use common\models\Item;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use backend\models\Statistic;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\VarDumper;
+use yii\web\UploadedFile;
 
 /**
  * ItemController implements the CRUD actions for Item model.
@@ -83,8 +85,21 @@ class ItemController extends Controller
     {
         $model = new Item();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if (Yii::$app->request->isPost) {
+            $request = Yii::$app->request->post('Item');
+            $model->name = $request['name'];
+            $model->price = $request['price'];
+            $model->category_id = $request['category_id'];
+
+            $model->image = UploadedFile::getInstance($model, 'image');
+            if ($model->image && $model->validate()) { // validasi image
+                $image_name = $model->name.'.'.$model->image->getExtension(); // mendefinisikan nama
+                $image_path = 'images/item/'.$image_name; // lokasi image akan disimpan
+                $model->image->saveAs($image_path); // memmindah file ke folder
+                $model->image = $image_path; // menambahkan link menujut file
+            }
+            $model->save(false); // save tanpa validasi lagi
+            return $this->redirect(['view', 'id' => $model->id]); // return ke detail view
         }
 
         return $this->render('create', [
@@ -103,8 +118,21 @@ class ItemController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if (Yii::$app->request->isPost) {
+            $request = Yii::$app->request->post('Item');
+            $model->name = $request['name'];
+            $model->price = $request['price'];
+            $model->category_id = $request['category_id'];
+
+            $model->image = UploadedFile::getInstance($model, 'image');
+            if ($model->image && $model->validate()) { // validasi image
+                $image_name = $model->name.'.'.$model->image->getExtension(); // mendefinisikan nama
+                $image_path = 'images/item/'.$image_name; // lokasi image akan disimpan
+                $model->image->saveAs($image_path); // memmindah file ke folder
+                $model->image = $image_path; // menambahkan link menujut file
+            }
+            $model->save(false); // save tanpa validasi lagi
+            return $this->redirect(['view', 'id' => $model->id]); // return ke detail view
         }
 
         return $this->render('update', [

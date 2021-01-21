@@ -5,49 +5,27 @@
 $this->title = 'My Yii Application';
 ?>
 <div class="site-index">
-
-    <div class="jumbotron">
-        <h1>Congratulations!</h1>
-
-        <p class="lead">You have successfully created your Yii-powered application.</p>
-
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
-    </div>
-
-    <div class="body-content">
-
-        <div class="row">
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
+    <div class="row" style="display: flex; flex-wrap: wrap; justify-content: center;">
+        <?php foreach ($data as $item) { ?>
+            <div class="col-md-4" style="margin-bottom: 20px;">
+                <div class="card" style="border: 1px solid #6c757d; padding: 10px;">
+                    <img src="<?= '../../../../yii/myMart/backend/web/'.$item->image ?>" alt="<?= $item->name ?>" class="card-img-top img-reponsive img-rounded" height="250px" width="100%">
+                    <hr style="border: 1px solid #6c757d;">
+                    <div class="card-body">
+                        <h2 class="text-capitalize"><?= $item['name'] ?></h2>
+                        <span>Rp. <?= $item['price'] ?>.00</span>
+                    </div>
+                    <?php if(Yii::$app->user->id) {?>
+                    <!-- jika user sudah login maka akan muncul button -->
+                    <div class="card-footer" style="margin-top: 10px;">
+                        <hr style="border: 1px solid #6c757d;">
+                        <div class="" style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center;">
+                            <a href="#" class="btn btn-primary">Buy</a>
+                        </div>
+                    </div>
+                    <?php } ?>
+                </div>
             </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
-            </div>
-        </div>
-
+        <?php } ?>
     </div>
 </div>
