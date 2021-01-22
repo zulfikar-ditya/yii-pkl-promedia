@@ -5,6 +5,25 @@
 $this->title = 'My Yii Application';
 ?>
 <div class="site-index">
+    <?php
+    if($dataCount != null) { ?>
+    <div class="" style="margin-bottom: 20px;">
+        <h3>Result; <?= $dataCount ?></h3>
+        <h5>category id: <?= $_GET['category'] ?></h5>
+    </div>
+    <?php }?>
+    <form action="" method="get" class="form-inline" style="margin-bottom: 20px;">
+        <div class="form-group">
+            <label for="">Category</label>
+            <select name="category" id="" class="form-control">
+                <?php foreach ($category as $categoryitem) { ?>
+                    <option value="<?= $categoryitem['id'] ?>"><?= $categoryitem['name'] ?></option>
+                <?php } ?>
+            </select>
+        </div>
+        <input type="submit" value="Filter" class="btn btn-success">
+    </form>
+        
     <div class="row" style="display: flex; flex-wrap: wrap; justify-content: center;">
         <?php foreach ($data as $item) { ?>
             <div class="col-md-4" style="margin-bottom: 20px;">
@@ -27,5 +46,12 @@ $this->title = 'My Yii Application';
                 </div>
             </div>
         <?php } ?>
+    </div>
+    <div class="row" style="display: flex; justify-content: center; align-items: center;">
+        <div class="col-md-5" style="align-self: center; text-align: center;">
+            <?= \yii\widgets\LinkPager::widget([
+                'pagination' => $pages,
+            ]) ?>
+        </div>
     </div>
 </div>

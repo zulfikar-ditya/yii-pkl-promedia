@@ -4,6 +4,7 @@ namespace frontend\controllers;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
 use common\models\Item;
+use common\models\ItemCategory;
 use Yii;
 use yii\base\InvalidArgumentException;
 use yii\web\BadRequestHttpException;
@@ -75,8 +76,25 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $data = Item::find()->all();
-        return $this->render('index', ['data' => $data]);
+        $data = Item::find();
+        $dataCount = null;
+        if (Yii::$app->request->get('category')) {
+            $category = Yii::$app->request->get('category');
+            $data = Item::find()->where(['category_id' => $category]);
+            $dataCount = $data->count();
+        }
+        $pages = new \yii\data\Pagination([
+                    'totalCount' => $data->count(),
+                    'pageSize' => 6
+                ]);
+        $models = $data->offset($pages->offset)->limit($pages->limit)->all();
+        $category = ItemCategory::find()->all();
+        return $this->render('index', [
+            'data' => $models,
+            'pages' => $pages,
+            'dataCount' => $dataCount,
+            'category' => $category,
+        ]);
     }
 
     /**
